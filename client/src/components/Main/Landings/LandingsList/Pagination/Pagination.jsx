@@ -16,26 +16,24 @@ const Pagination = (props) => {
 
 
   useEffect(() => {
-    //sincronizar los landings de landings list con los de este componente
     setLandings(props.landings);
-    //Establecer los landings que se mostrarán
     setLandingsToDisplay(landings.slice((activePage * 10) - 10, activePage * 10));
-    //este efecto se ejecturará al cargar el componente 
+    // eslint-disable-next-line
   }, [])
 
-
-  useEffect(() => {//actualiza el estado landings cada vez que se modifican los props
+  useEffect(() => {//actualiza el estado landings cada vez que se modifican los landings del padre
     setLandings(props.landings)
   }, [props.landings])
 
-
   useEffect(() => {//actualiza los landings to display cada vez que se actualizan los landings
     setLandingsToDisplay(landings.slice((activePage * 10) - 10, activePage * 10))
+    // eslint-disable-next-line
   }, [landings])
 
 
   useEffect(() => {//Actualiza los landings a mostrar cada vez que se cambia de pagina
     setLandingsToDisplay(landings.slice((activePage * 10) - 10, activePage * 10))
+    // eslint-disable-next-line
   }, [activePage])
 
 
