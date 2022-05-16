@@ -27,6 +27,7 @@
         font-size: 1.3rem;
         cursor: text;
         top: 20px;
+        
     }
 }
 
@@ -38,6 +39,7 @@
     transition: 0.2s;
     font-size: 1rem;
     color: $white;
+    
 }
 
 .input__field:focus {
@@ -49,6 +51,7 @@
         font-size: 1rem;
         color: $primary;
         font-weight: 300;
+        background-color: transparent;
     }
 
     padding-bottom: 6px;
@@ -56,6 +59,7 @@
     border-width: 3px;
     border-image: linear-gradient(to right, $primary, $secondary);
     border-image-slice: 1;
+    background-color: transparent;
 }
 
 /* reset input */
@@ -66,3 +70,5 @@
         box-shadow: none;
     }
 }
+
+

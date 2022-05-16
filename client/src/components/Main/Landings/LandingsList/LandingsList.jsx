@@ -12,12 +12,14 @@ import Pagination from "./Pagination/Pagination";
 function LandingsList(props) {
 
     const [landings, setLandings] = useState([]);
-    const [coordinates, setCoordinates] = useState([])
+    const [coordinates, setCoordinates] = useState([]);
     const [filter, setFilter] = useState("");
-    const [filterSelector, setFilterSelector] = useState("class")
+    const [filterSelector, setFilterSelector] = useState("class");
+    const [soughtLanding, setSoughtLanding] = useState({})
 
     const from = useRef()
     const to = useRef()
+    const landingNameForSearch = useRef()
     const selector = useRef("mass");
 
     const position = [40.4168, -3.7038];
@@ -51,6 +53,14 @@ function LandingsList(props) {
 
     }, [filter])
 
+
+    useEffect(() => {
+
+
+
+    }, [soughtLanding])
+
+
     const handleClass = (event) => {
         event.preventDefault();
 
@@ -76,6 +86,21 @@ function LandingsList(props) {
         setFilter(`?from=${from.current.value}&to=${to.current.value}`)
     }
 
+
+    const handleSearchLandingByName = async (event) => {
+        event.preventDefault();
+        const params = landingNameForSearch.current.value;
+        const request = await axios({
+            url: `http://localhost:5000/api/astronomy/landings/${params}`,
+            method: 'get'
+        })
+        const response = request.data[0];
+        setSoughtLanding(response);
+        setTimeout(()=>{setSoughtLanding({})},3000)
+    }
+
+
+
     const removeLanding = (i, id) => {
         try {
             axios({
@@ -87,11 +112,9 @@ function LandingsList(props) {
                 }
             })
         } catch (error) {
-
+            console.log(error)
         }
-
         const remainingLandings = landings.filter((landing, j) => i !== j)
-
         setLandings(remainingLandings);
     }
 
@@ -188,10 +211,7 @@ function LandingsList(props) {
             <div>
                 {landings ? <p>{landings.length} landings displayed </p> : ""}
             </div>
-            <div>
 
-                <Link to="/landingsform/?"><button className="button1">Add new landing</button></Link>
-            </div>
 
         </section>
         <section>
@@ -209,6 +229,34 @@ function LandingsList(props) {
 
                 </MapContainer>
             </div>
+        </section>
+
+        <section>
+            <h1>Find your landing</h1>
+            <form onSubmit={handleSearchLandingByName}>
+                <div className="input__group">
+                    <label className="input__label" htmlFor="search">search your landing by name</label>
+                    <input className="input__field" type="text" name="search" placeholder="landing name" ref={landingNameForSearch} />
+                </div>
+                {soughtLanding.name ? <>
+                    <article >
+                        <h3>name: {soughtLanding.name}</h3>
+                        <p>landing id#{soughtLanding.id}</p>
+                        <p>date: {soughtLanding.year}</p>
+                        <p>date: {soughtLanding.date}</p>
+                        <p>mass: {soughtLanding.mass}</p>
+                        <p>fall: {soughtLanding.fall}</p>
+                        <p>name type: {soughtLanding.nametype}</p>
+                        <p>recclass: {soughtLanding.recclass}</p>
+                        <p>geolocation: lat:{soughtLanding.reclat} lon: {soughtLanding.reclon} </p>
+                    </article> </> : ""}
+
+                <button className="button1">Search landing</button>
+            </form>
+            <div>
+                <Link to="/landingsform/?"><button className="button1">Add new landing</button></Link>
+            </div>
+
         </section>
 
 

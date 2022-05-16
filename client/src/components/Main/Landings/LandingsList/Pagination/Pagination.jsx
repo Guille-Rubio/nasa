@@ -10,7 +10,7 @@ const Pagination = (props) => {
   const totalPagesForLandings = Math.ceil(landings.length / 10) //crea un número de páginas para los landings recibidos//este numero lo debe importar del meta de la bbdd
   const [activePage, setActivePage] = useState(1);//establece la página activa
   const [landingsToDisplay, setLandingsToDisplay] = useState([]);//contiene los landings que se muestran en la página activa
-  const [nameOrder, setNameOrder] = useState("ascendent");
+  const [nameOrder, setNameOrder] = useState("");
   const [massOrder, setMassOrder] = useState("");
   const [dateOrder, setDateOrder] = useState("")
 
@@ -51,12 +51,18 @@ const Pagination = (props) => {
     if (nameOrder === "descendent") {
       setLandingsToDisplay(landingsToDisplay.sort(sortNameArrayAscendent))
       setNameOrder("ascendent")
+      setDateOrder("")
+      setMassOrder("")
     } else if (nameOrder === "ascendent") {
       setLandingsToDisplay(landingsToDisplay.sort(sortNameArrayDescendent))
       setNameOrder("descendent")
+      setDateOrder("")
+      setMassOrder("")
     } else {
       setLandingsToDisplay(landingsToDisplay.sort(sortNameArrayAscendent))
       setNameOrder("ascendent")
+      setDateOrder("")
+      setMassOrder("")
     }
   }
 
@@ -64,12 +70,18 @@ const Pagination = (props) => {
     if (massOrder === "descendant") {
       setLandingsToDisplay(landingsToDisplay.sort(sortMassArrayAscendent))
       setMassOrder("ascendent")
+      setDateOrder("")
+      setNameOrder("")
     } else if (massOrder === "ascendent") {
       setLandingsToDisplay(landingsToDisplay.sort(sortMassArrayDescendent))
       setMassOrder("descendent")
+      setDateOrder("")
+      setNameOrder("")
     } else {
       setLandingsToDisplay(landingsToDisplay.sort(sortMassArrayAscendent))
       setMassOrder("ascendent")
+      setDateOrder("")
+      setNameOrder("")
     }
   }
 
@@ -77,12 +89,18 @@ const Pagination = (props) => {
     if (dateOrder === "descendent") {
       setLandingsToDisplay(landingsToDisplay.sort(sortDateArrayAscendent));
       setDateOrder("ascendent");
+      setNameOrder("")
+      setMassOrder("")
     } else if (dateOrder === "ascendent") {
       setLandingsToDisplay(landingsToDisplay.sort(sortDateArrayDescendent));
       setDateOrder("descendent");
+      setNameOrder("")
+      setMassOrder("")
     } else {
       setLandingsToDisplay(landingsToDisplay.sort(sortDateArrayAscendent));
       setDateOrder("ascendent");
+      setNameOrder("")
+      setMassOrder("")
     }
   }
 
@@ -94,9 +112,9 @@ const Pagination = (props) => {
 
     <section>
       <h1>buscador Landings</h1>
-      <button className="button1" onClick={handleNameOrder}>Name</button>
-      <button className="button1" onClick={handleDateOrder}>Date</button>
-      <button className="button1" onClick={handleMassOrder}>Mass</button>
+      <button className="button1" onClick={handleNameOrder}>Name {nameOrder}</button>
+      <button className="button1" onClick={handleDateOrder}>Date {dateOrder}</button>
+      <button className="button1" onClick={handleMassOrder}>Mass {massOrder}</button>
     </section>
 
     <h1>Todos los landings</h1>
@@ -107,7 +125,7 @@ const Pagination = (props) => {
     </section>
 
     <section>
-      {landings/* .length > 0  */ ? landingsToDisplay.map((landing, i) => <LandingsCard data={landing} key={uuidV4()} remove={() => props.remove(i, landing.id)} />) : ""}
+      {landings/* .length > 0  */ ? landingsToDisplay.map((landing, i) => <LandingsCard className="landings-card" data={landing} key={uuidV4()} remove={() => props.remove(i, landing.id)} />) : ""}
     </section>
 
     <section className="page-box-container">
