@@ -5,16 +5,13 @@ import { useParams } from 'react-router-dom';
 
 function LandingsForm(props) {
 
-  const params = useParams()
-  console.log(params)
-  console.log(params.id)
-  
+  let { paramsId } = useParams();
 
-  const [addMode, setAddMode] = useState(params.id === undefined)
-  console.log("addMode ", addMode)
+  const [addMode, setAddMode] = useState(paramsId === undefined)
+  const [message, setMessage] = useState("");
 
   const [name, setName] = useState("")
-  const [id, setId] = useState(addMode ? "" : params.id)
+  const [id, setId] = useState(addMode ? "" : paramsId)
   const [nametype, setNametype] = useState("")
   const [recclass, setRecclass] = useState("")
   const [mass, setMass] = useState("")
@@ -25,23 +22,31 @@ function LandingsForm(props) {
   const [latitude, setLatitude] = useState("")
   const [longitude, setLongitude] = useState("")
 
-/*   useEffect(() => {
-   
-    console.log("***************");
-    console.log(params)
-    console.log(params.id)
-    setAddMode(params.id === undefined)
-    //actualizar componente según addMode
-    console.log("add mode use effect --> " , addMode)
 
-
-  }, []) */
 
   useEffect(() => {
-    //si hay parámetros cargar datos del registro para editar. 
-    //pasar el landing desde la lista o hacer fetch?
+    const getLandingToEdit = async () => {
+      const request = await axios({
+        url: `http://localhost:5000/api/astronomy/landings/id/${paramsId}`,
+        method: 'get'
+      });
+      const response = await request.data[0];
+      const { name, nametype, recclass, mass, fall, year, reclat, reclong } = response;
+      setName(name);
+      setNametype(nametype);
+      setRecclass(recclass);
+      setMass(mass);
+      setFall(fall);
+      setYear(year);
+      setReclat(reclat);
+      setReclong(reclong);
+      setLatitude(response.geolocation.latitude);
+      setLongitude(response.geolocation.longitude);
+    }
+    getLandingToEdit();
 
-  }, [id])
+
+  }, [])
 
 
   const handleChangeName = event => setName(event.target.value);
@@ -56,15 +61,15 @@ function LandingsForm(props) {
   const handleChangeLatitude = event => setLatitude(event.target.value);
   const handleChangeLongitude = event => setLongitude(event.target.value);
 
-  const addNewLanding = (event) => {
+  const addNewLanding = async (event) => {
     event.preventDefault()
     //añadir validaciones front
     if (addMode) {
       //post to edit 
-      
+
     } else {
       try {
-        axios({
+        const request = await axios({
           method: 'post',
           url: 'http://localhost:5000/api/astronomy/landings/create',
           data: {
@@ -83,6 +88,10 @@ function LandingsForm(props) {
             }
           }
         })
+        const response = await request.data[0];
+        setMessage(response);
+        setTimeout(() => setMessage(""), 3000);
+
       } catch (error) {
         console.log("there was an error, your new landing could not be saved")
       }
@@ -99,10 +108,16 @@ function LandingsForm(props) {
         <label className="input__label" htmlFor="name">name</label>
         <input className="input__field" type="text" name="name" placeholder="name" id="name" value={name} onChange={handleChangeName} />
       </div>
-      <div className="input__group">
-        <label className="input__label" htmlFor="id">id</label>
-        <input className="input__field" type="text" name="id" placeholder="id" id="id" value={id} onChange={handleChangeId} />
-      </div>
+      {addMode ?
+        <div className="input__group">
+          <label className="input__label" htmlFor="id">id</label>
+          <input className="input__field" type="text" name="id" placeholder="id" id="id" value={id} onChange={handleChangeId} />
+        </div> :
+        <div className="input__group">
+          <label className="input__label" htmlFor="id">id</label>
+          <input className="input__field" type="text" name="id" placeholder="id" id="id" value={id} />
+        </div>
+      }
       <div className="input__group">
         <label className="input__label" htmlFor="nametype">nametype</label>
         <input className="input__field" type="text" name="nametype" placeholder="nametype" id="nametype" value={nametype} onChange={handleChangenametype} />
@@ -146,7 +161,7 @@ function LandingsForm(props) {
 
       </div>
     </form>
-
+    {message ? <p>landing saved</p> : ""}
   </div>;
 
 }

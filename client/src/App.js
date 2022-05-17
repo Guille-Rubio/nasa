@@ -27,10 +27,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-       
           <Header />
           <Main />
-      
         <Footer />
       </BrowserRouter>
     </div>

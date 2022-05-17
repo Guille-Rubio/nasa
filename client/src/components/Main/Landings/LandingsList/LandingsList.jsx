@@ -90,13 +90,19 @@ function LandingsList(props) {
     const handleSearchLandingByName = async (event) => {
         event.preventDefault();
         const params = landingNameForSearch.current.value;
+        //Capitalize params to prevent request errors
         const request = await axios({
-            url: `http://localhost:5000/api/astronomy/landings/${params}`,
+            url: `http://localhost:5000/api/astronomy/landings/name/${params}`,
             method: 'get'
         })
-        const response = request.data[0];
-        setSoughtLanding(response);
-        setTimeout(()=>{setSoughtLanding({})},3000)
+        const response = await request.data[0];
+        if (response !== undefined) {
+            setSoughtLanding(response)
+            setTimeout(() => { setSoughtLanding({}) }, 3000)
+        } else {
+            setSoughtLanding("n/a")
+            setTimeout(() => { setSoughtLanding({}) }, 3000)
+        }
     }
 
 
@@ -129,7 +135,7 @@ function LandingsList(props) {
 
         <section>
             <h2>Search landings by:</h2>
-            <select name="selector" id="selector" defaultValue="class" ref={selector} onChange={selectFilter}>
+            <select className="input__field" name="selector" id="selector" defaultValue="class" ref={selector} onChange={selectFilter}>
                 <option value="class">Class</option>
                 <option value="mass">Mass</option>
                 <option value="dates">Dates</option>
@@ -237,6 +243,7 @@ function LandingsList(props) {
                 <div className="input__group">
                     <label className="input__label" htmlFor="search">search your landing by name</label>
                     <input className="input__field" type="text" name="search" placeholder="landing name" ref={landingNameForSearch} />
+                    {soughtLanding === "n/a" ? <p>No saved landing under {landingNameForSearch.current.value}</p> : ""}
                 </div>
                 {soughtLanding.name ? <>
                     <article >
@@ -251,10 +258,11 @@ function LandingsList(props) {
                         <p>geolocation: lat:{soughtLanding.reclat} lon: {soughtLanding.reclon} </p>
                     </article> </> : ""}
 
+
                 <button className="button1">Search landing</button>
             </form>
             <div>
-                <Link to="/landingsform/?"><button className="button1">Add new landing</button></Link>
+                <Link to="/landingsform"><button className="button1">Add new landing</button></Link>
             </div>
 
         </section>

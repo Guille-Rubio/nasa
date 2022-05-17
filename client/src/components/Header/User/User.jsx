@@ -35,7 +35,7 @@ const User = () => {
       //add login function
     }
     //SET ACTIVE USER WITH REDUX
-   
+
     setUserMode("loged");
     setUser(email);
     setEmail("");
@@ -49,7 +49,7 @@ const User = () => {
       const request = await axios({
         url: "http://localhost:5000/users/login",
         method: 'post',
-       /*  withCredentials:true, */
+        /*  withCredentials:true, */
         data: {
           email: email,
           password: password
@@ -58,16 +58,17 @@ const User = () => {
 
       const response = await request.data;
       console.log("response", response);
+      setUserMode("loged");
+      setUser(email);
+      setEmail("");
+      setPassWord("");
     } catch (error) {
       console.log(error);
 
     }
 
     //SET ACTIVE USER WITH REDUX
-    setUserMode("loged");
-    setUser(email);
-    setEmail("");
-    setPassWord("");
+
   }
 
   const handleLogout = () => {

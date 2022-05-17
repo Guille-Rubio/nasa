@@ -7,13 +7,15 @@ import NeasForm from './NeasForm/NeasForm';
 import NeasList from './NeasList/NeasList';
 import Cart from "./Cart/Cart";
 
+
 function Main(props) {
 
   return <main className="main">
 
     <Routes>
         <Route element={<Home />} path="/"/>
-        <Route element={<LandingsForm/>} path="/landingsform/?"/>
+        <Route element={<LandingsForm/>} path="/landingsform/:paramsId"/>
+        <Route element={<LandingsForm/>} path="/landingsform"/>
         <Route element={<Landings />} path="/landings"/>
         <Route element={<NeasForm />} path="/createneas"/>
         <Route element={<NeasList />} path="/neas"/>
