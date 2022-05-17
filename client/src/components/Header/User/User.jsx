@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import cart from '../../../assets/img/cart.jpg';
 import axios from "axios";
-import { baseUrl } from "../../../utils/base_url";
 import userIcon from '../../../assets/img/userIcon.svg';
 
 
@@ -22,7 +21,7 @@ const User = () => {
       console.log(email, password);
       try {
         const request = await axios({
-          url: `${baseUrl}/users/signup`,
+          url: `${process.env.REACT_APP_BASE_URL}/users/signup`,
           method: 'post',
           data: {
             email: email,
@@ -51,7 +50,7 @@ const User = () => {
     event.preventDefault();
     try {
       const request = await axios({
-        url: `${baseUrl}/users/login`,
+        url: `${process.env.REACT_APP_BASE_URL}/users/login`,
         method: 'post',
         /*  withCredentials:true, */
         data: {

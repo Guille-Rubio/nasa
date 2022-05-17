@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { baseUrl } from "../../../../utils/base_url";
+
 
 
 const NeasCard = (props) => {
@@ -9,7 +9,7 @@ const {designation, discovery_date,h_mag, i_deg, moid_au, orbit_class, period_yr
 const removeNea = () => {
     axios({
       method:'delete',
-      url:`${baseUrl}/api/astronomy/neas/delete`,
+      url:`${process.env.BASE_URL}/api/astronomy/neas/delete`,
       data:{designation:designation},
     })
     props.remove();

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { Scroll } from 'react-scroll-component';
 import { scrollConfig } from '../../../utils/scroll_config';
-import { baseUrl } from "../../../utils/base_url";
 
 function NeasForm(props) {
 
@@ -35,7 +34,7 @@ function NeasForm(props) {
     try {
       await axios({
         method: 'post',
-        url: `${baseUrl}/api/astronomy/neas/create`,
+        url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/neas/create`,
         data: {
           designation: designation,
           discovery_date: discovery_date,

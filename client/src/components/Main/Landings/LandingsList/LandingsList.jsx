@@ -6,7 +6,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 
 import Pagination from "./Pagination/Pagination";
-import { baseUrl } from "../../../../utils/base_url";
+
 
 
 function LandingsList(props) {
@@ -37,7 +37,7 @@ function LandingsList(props) {
 
         const fetchLandings = async () => {
             try {
-                const request = await axios.get(`${baseUrl}/api/astronomy/landings/${filter}`);
+                const request = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/${filter}`);
                 const response = await request.data;
                 console.log("landings", request);
                 const locatedLandings = response.filter(landing => landing.geolocation !== "")
@@ -92,7 +92,7 @@ function LandingsList(props) {
         const params = landingNameForSearch.current.value;
         //Capitalize params to prevent request errors
         const request = await axios({
-            url: `${baseUrl}/api/astronomy/landings/name/${params}`,
+            url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/name/${params}`,
             method: 'get'
         })
         const response = await request.data[0];
@@ -110,7 +110,7 @@ function LandingsList(props) {
     const removeLanding = (i, id) => {
         try {
             axios({
-                url: `${baseUrl}/api/astronomy/landings/delete`,
+                url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/delete`,
                 method: 'delete',
                 data: { id: id },
                 headers: {//SORT OUT CORS TO FIX IT
