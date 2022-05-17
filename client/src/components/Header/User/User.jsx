@@ -18,7 +18,7 @@ const User = () => {
   const handleSignUp = async (event) => {
     if (password === password2) {
       event.preventDefault();
-      console.log(email, password);
+
       try {
         const request = await axios({
           url: `${process.env.REACT_APP_BASE_URL}/users/signup`,
@@ -29,9 +29,9 @@ const User = () => {
           }
         })
         alert(`new user ${email} registered`);
-        console.log(request);
+
       } catch (error) {
-        console.log(error);
+        throw error
       }
     } else {
       alert("passwords don't match");
@@ -60,13 +60,13 @@ const User = () => {
       })
 
       const response = await request.data;
-      console.log("response", response);
+
       setUserMode("logged");
       setUser(email);
       setEmail("");
       setPassWord("");
     } catch (error) {
-      console.log(error);
+      throw error
 
     }
 
