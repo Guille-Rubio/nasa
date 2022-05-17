@@ -4,8 +4,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import { v4 as uuidV4 } from 'uuid';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import { Scroll } from 'react-scroll-component';
-import { scrollConfig } from '../../../../utils/scroll_config';
+
 import Pagination from "./Pagination/Pagination";
 import { baseUrl } from "../../../../utils/base_url";
 
@@ -99,7 +98,7 @@ function LandingsList(props) {
         const response = await request.data[0];
         if (response !== undefined) {
             setSoughtLanding(response)
-            setTimeout(() => { setSoughtLanding({}) }, 3000)
+            setTimeout(() => { setSoughtLanding({}) }, 5000)
         } else {
             setSoughtLanding("n/a")
             setTimeout(() => { setSoughtLanding({}) }, 3000)
@@ -135,11 +134,12 @@ function LandingsList(props) {
     return (<div className="landing-list">
 
         <section>
-            <h2>Search landings by:</h2>
+            <h2>Find the landings registered by the NASA</h2>
             <select className="input__field" name="selector" id="selector" defaultValue="class" ref={selector} onChange={selectFilter}>
                 <option value="class">Class</option>
                 <option value="mass">Mass</option>
                 <option value="dates">Dates</option>
+                {/* <option value="name">Name</option> */}
             </select>
         </section>
 
@@ -214,6 +214,10 @@ function LandingsList(props) {
                             <button className="button1" onClick={handleDate}>Search by date</button>
                         </div>
                     </> : ""}
+
+                    
+
+                    
             </form>
             <div>
                 {landings ? <p>{landings.length} landings displayed </p> : ""}
@@ -221,44 +225,33 @@ function LandingsList(props) {
 
 
         </section>
-        <section>
-            <h1>Map</h1>
-            <div className="map" id="map">
+        {coordinates.length!==0 ? <>
+            <section>
+                <div className="map" id="map">
 
-                <MapContainer
-                    center={position} zoom={2} /* scrollWheelZoom={true} */ >
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
+                    <MapContainer
+                        center={position} zoom={2} /* scrollWheelZoom={true} */ >
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
 
-                    {coordinates ? coordinates.map(location => <Marker position={location} key={uuidV4()}></Marker>) : ""}
+                        {coordinates ? coordinates.map(location => <Marker position={location} key={uuidV4()}></Marker>) : ""}
 
-                </MapContainer>
-            </div>
-        </section>
+                    </MapContainer>
+                </div>
+            </section>
 
-        <section>
-            <h1>Find your landing</h1>
-            <form onSubmit={handleSearchLandingByName}>
+            <Pagination remove={removeLanding} landings={landings} />
+        </> : ""}
+        <section className="landings-list__search-by-name-section">
+
+            <form className="landings-list__search-by-name-form" onSubmit={handleSearchLandingByName}>
                 <div className="input__group">
                     <label className="input__label" htmlFor="search">search your landing by name</label>
                     <input className="input__field" type="text" name="search" placeholder="landing name" ref={landingNameForSearch} />
                     {soughtLanding === "n/a" ? <p>No saved landing under {landingNameForSearch.current.value}</p> : ""}
                 </div>
-                {soughtLanding.name ? <>
-                    <article >
-                        <h3>name: {soughtLanding.name}</h3>
-                        <p>landing id#{soughtLanding.id}</p>
-                        <p>date: {soughtLanding.year}</p>
-                        <p>date: {soughtLanding.date}</p>
-                        <p>mass: {soughtLanding.mass}</p>
-                        <p>fall: {soughtLanding.fall}</p>
-                        <p>name type: {soughtLanding.nametype}</p>
-                        <p>recclass: {soughtLanding.recclass}</p>
-                        <p>geolocation: lat:{soughtLanding.reclat} lon: {soughtLanding.reclon} </p>
-                    </article> </> : ""}
-
 
                 <button className="button1">Search landing</button>
             </form>
@@ -266,13 +259,36 @@ function LandingsList(props) {
                 <Link to="/landingsform"><button className="button1">Add new landing</button></Link>
             </div>
 
+            {soughtLanding.name ? <>
+                <article className="landing-list__landing-card">
+                    <h3>{soughtLanding.name}</h3>
+                    <p>landing id#{soughtLanding.id}</p>
+                    <p>date: {soughtLanding.year}</p>
+                    <p>date: {soughtLanding.date}</p>
+                    <p>mass: {soughtLanding.mass}</p>
+                    <p>fall: {soughtLanding.fall}</p>
+                    <p>name type: {soughtLanding.nametype}</p>
+                    <p>recclass: {soughtLanding.recclass}</p>
+                    <p>geolocation: lat:{soughtLanding.reclat} lon: {soughtLanding.reclon} </p>
+                    <div className="map2" id="map">
+
+                        <MapContainer
+                            center={[soughtLanding.geolocation.latitude, soughtLanding.geolocation.longitude]} zoom={5} scrollWheelZoom={true} >
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+
+                            <Marker position={[soughtLanding.geolocation.latitude, soughtLanding.geolocation.longitude]}></Marker>
+
+                        </MapContainer>
+                    </div>
+                </article> </> : ""}
+
         </section>
 
 
-        <Scroll {...scrollConfig}>
-            {/*  {landings.map((landing, i) => <LandingsCard className="landings-card" data={landing} key={uuidV4()} remove={()=>removeLanding(i)} index={i} />)} */}
-            <Pagination remove={removeLanding} landings={landings} />
-        </Scroll>
+
 
 
     </div >)

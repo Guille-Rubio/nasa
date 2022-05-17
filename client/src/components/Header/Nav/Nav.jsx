@@ -12,10 +12,10 @@ function Nav(props) {
 
   return <nav className="navbar">
     <img src={burger} className="burger" onClick={open} alt="burger icon"></img>
-    <ul className="navbar__list">
-      <li><Link className={`${visible} button1`} to="/">Home</Link></li>
-      <li><Link className={`${visible} button1`} to="/landings">Asteroids</Link></li>
-      <li><Link className={`${visible} button1`} to="/neas">Neas</Link></li>
+    <ul className={`${visible} navbar__list`}>
+      <li><Link className="button1" to="/">Home</Link></li>
+      <li><Link className="button1" to="/landings">Asteroids</Link></li>
+      <li><Link className="button1" to="/neas">Neas</Link></li>
     </ul>
   </nav>;
 }

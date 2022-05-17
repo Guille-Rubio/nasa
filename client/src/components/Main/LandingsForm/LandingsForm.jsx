@@ -8,7 +8,7 @@ function LandingsForm(props) {
 
   let { paramsId } = useParams();
 
-  const [addMode, setAddMode] = useState(paramsId === undefined)
+  const [addMode] = useState(paramsId === undefined)
   const [message, setMessage] = useState("");
 
   const [name, setName] = useState("")
@@ -46,7 +46,7 @@ function LandingsForm(props) {
     }
     getLandingToEdit();
 
-
+    // eslint-disable-next-line
   }, [])
 
 

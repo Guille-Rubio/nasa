@@ -8,7 +8,7 @@ const LandingsCard = (props) => {
   const [showDetail, setShowDetail] = useState(false)
 
   const { id, name, year, geolocation, mass, date, fall, recclass, nametype } = props.data
-  //const [params, setParams] = useSearchParams();
+ 
 
   const removeLanding = () => {
     axios({

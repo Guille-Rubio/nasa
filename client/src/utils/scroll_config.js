@@ -1,7 +1,8 @@
 
 const scrollConfig = {
     direction: "vertical",
-    height: "100vh",
+    height: "60vh",
+    width:"90vw"
 }
 
 export { scrollConfig }

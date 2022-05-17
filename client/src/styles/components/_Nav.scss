@@ -1,14 +1,22 @@
 .navbar{
+    position:relative;
     display:flex;
     justify-content:center;
+    flex-direction: column;
     align-items: center;
     align-content: left;
+
 
 }
 
 .navbar__list{
+    background-color: white;
+    position:absolute;
+    bottom:-135px;
+    left:0px;
     list-style: none;
-
+    padding:5px;
+    border-radius: 15px;
 }
 
 a{

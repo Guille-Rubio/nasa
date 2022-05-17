@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidV4 } from 'uuid';
 import LandingsCard from '../LandingsCard/LandingsCard';
+import { Scroll } from 'react-scroll-component';
+import { scrollConfig } from '../../../../../utils/scroll_config';
 import { sortNameArrayAscendent, sortMassArrayAscendent, sortDateArrayAscendent, sortNameArrayDescendent, sortMassArrayDescendent, sortDateArrayDescendent } from "../../../../../utils/sort_array_of_objects";
 
 
@@ -109,30 +111,33 @@ const Pagination = (props) => {
 
 
   return <section className="pagination">
+    {landingsToDisplay.length !== 0 ? <>
+      <h1>order your landings</h1>
+      <section className="pagination__button-box__filters">
+        <button className="button1" onClick={handleNameOrder}>By name {nameOrder}</button>
+        <button className="button1" onClick={handleDateOrder}>By date {dateOrder}</button>
+        <button className="button1" onClick={handleMassOrder}>By mass {massOrder}</button>
+      </section>
+      <section className="page-box-container">
+        {activePage > 1 ? <button className="button1" onClick={handlePrevious}>Previous</button> : ""}
+        {landings.map((landings, i) => i % 10 === 0 ? <div className="page-box" key={uuidV4()}>{(i / 10) + 1}</div> : "")}
+        {activePage < totalPagesForLandings ? <button className="button1" onClick={handleNext}>Next</button> : ""}
+      </section>
 
-    <section>
-      <h1>buscador Landings</h1>
-      <button className="button1" onClick={handleNameOrder}>Name {nameOrder}</button>
-      <button className="button1" onClick={handleDateOrder}>Date {dateOrder}</button>
-      <button className="button1" onClick={handleMassOrder}>Mass {massOrder}</button>
-    </section>
+      <Scroll {...scrollConfig}>
 
-    <h1>Todos los landings</h1>
-    <section className="page-box-container">
-      {activePage > 1 ? <button className="button1" onClick={handlePrevious}>Previous</button> : ""}
-      {landings.map((landings, i) => i % 10 === 0 ? <div className="page-box" key={uuidV4()}>{(i / 10) + 1}</div> : "")}
-      {activePage < totalPagesForLandings ? <button className="button1" onClick={handleNext}>Next</button> : ""}
-    </section>
+        <section className="pagination__page">
+          {landings/* .length > 0  */ ? landingsToDisplay.map((landing, i) => <LandingsCard className="landings-card" data={landing} key={uuidV4()} remove={() => props.remove(i, landing.id)} />) : ""}
+        </section>
 
-    <section>
-      {landings/* .length > 0  */ ? landingsToDisplay.map((landing, i) => <LandingsCard className="landings-card" data={landing} key={uuidV4()} remove={() => props.remove(i, landing.id)} />) : ""}
-    </section>
+      </Scroll>
 
-    <section className="page-box-container">
-      {activePage > 1 ? <button className="button1" onClick={handlePrevious}>Previous</button> : ""}
-      {landings.map((landings, i) => i % 10 === 0 ? <div className="page-box" key={uuidV4()}>{(i / 10) + 1}</div> : "")}
-      {activePage < totalPagesForLandings ? <button className="button1" onClick={handleNext}>Next</button> : ""}
-    </section>
+      <section className="page-box-container">
+        {activePage > 1 ? <button className="button1" onClick={handlePrevious}>Previous</button> : ""}
+        {landings.map((landings, i) => i % 10 === 0 ? <div className="page-box" key={uuidV4()}>{(i / 10) + 1}</div> : "")}
+        {activePage < totalPagesForLandings ? <button className="button1" onClick={handleNext}>Next</button> : ""}
+      </section>
+    </> : ""}
   </section>;
 
 };

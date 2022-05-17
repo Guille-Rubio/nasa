@@ -1,3 +1,7 @@
+h2{
+    text-align: center;
+}
+
 .landing-list{
     color:white;
 }
@@ -20,9 +24,46 @@
     justify-content: center;
 }
 
+.landing-list__landing-card{
+    background-color: white;
+    border-radius: 15px;
+    color:black;
+    padding:15px;
+    text-align: center;
+
+}
+
+
 .leaflet-container{
     height:50vh;
     width:100vw;
 }
 
+.map{
+    margin:auto;
+    overflow: hidden;
+    border-radius: 15px;
+}
 
+.map2{
+    margin:auto;
+    overflow: hidden;
+    border-radius: 15px;
+    max-height: 180px;
+    max-width:350px;
+}
+
+.landings-list__search-by-name-section{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap:15px;
+}
+
+.landings-list__search-by-name-form{
+    display:flex;
+    flex-direction: column;
+    gap:15px;
+}
