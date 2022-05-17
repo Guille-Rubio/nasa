@@ -7,6 +7,7 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { Scroll } from 'react-scroll-component';
 import { scrollConfig } from '../../../../utils/scroll_config';
 import Pagination from "./Pagination/Pagination";
+import { baseUrl } from "../../../../utils/base_url";
 
 
 function LandingsList(props) {
@@ -37,7 +38,7 @@ function LandingsList(props) {
 
         const fetchLandings = async () => {
             try {
-                const request = await axios.get(`http://localhost:5000/api/astronomy/landings/${filter}`);
+                const request = await axios.get(`${baseUrl}/api/astronomy/landings/${filter}`);
                 const response = await request.data;
                 console.log("landings", request);
                 const locatedLandings = response.filter(landing => landing.geolocation !== "")
@@ -92,7 +93,7 @@ function LandingsList(props) {
         const params = landingNameForSearch.current.value;
         //Capitalize params to prevent request errors
         const request = await axios({
-            url: `http://localhost:5000/api/astronomy/landings/name/${params}`,
+            url: `${baseUrl}/api/astronomy/landings/name/${params}`,
             method: 'get'
         })
         const response = await request.data[0];
@@ -110,7 +111,7 @@ function LandingsList(props) {
     const removeLanding = (i, id) => {
         try {
             axios({
-                url: 'http://localhost:5000/api/astronomy/landings/delete',
+                url: `${baseUrl}/api/astronomy/landings/delete`,
                 method: 'delete',
                 data: { id: id },
                 headers: {//SORT OUT CORS TO FIX IT

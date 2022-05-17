@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from "../../../utils/base_url";
 
 
 function LandingsForm(props) {
@@ -27,7 +28,7 @@ function LandingsForm(props) {
   useEffect(() => {
     const getLandingToEdit = async () => {
       const request = await axios({
-        url: `http://localhost:5000/api/astronomy/landings/id/${paramsId}`,
+        url: `${baseUrl}/api/astronomy/landings/id/${paramsId}`,
         method: 'get'
       });
       const response = await request.data[0];
@@ -71,7 +72,7 @@ function LandingsForm(props) {
       try {
         const request = await axios({
           method: 'post',
-          url: 'http://localhost:5000/api/astronomy/landings/create',
+          url: `${baseUrl}/api/astronomy/landings/create`,
           data: {
             name: name,
             id: id,

@@ -4,6 +4,7 @@ import axios from "axios";
 import NeasCard from "./NeasCard/NeasCard";
 import { Scroll } from 'react-scroll-component';
 import { scrollConfig } from '../../../utils/scroll_config';
+import { baseUrl } from "../../../utils/base_url";
 
 function NeasList(props) {
 
@@ -19,7 +20,7 @@ function NeasList(props) {
 
     const fetchNeas = async () => {
       try {
-        const request = await axios.get(`http://localhost:5000/api/astronomy/neas`);
+        const request = await axios.get(`${baseUrl}/api/astronomy/neas`);
         const response = await request.data;
         console.log(request);
 

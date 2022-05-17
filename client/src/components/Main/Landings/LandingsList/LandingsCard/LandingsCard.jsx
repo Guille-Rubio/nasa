@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { baseUrl } from "../../../../../utils/base_url";
 
 const LandingsCard = (props) => {
 
@@ -12,7 +13,7 @@ const LandingsCard = (props) => {
   const removeLanding = () => {
     axios({
       method: 'delete',
-      url: "http://localhost:5000/api/astronomy/landings/delete",
+      url: `${baseUrl}/api/astronomy/landings/delete`,
       data: { id: id },
     })
     props.remove();
