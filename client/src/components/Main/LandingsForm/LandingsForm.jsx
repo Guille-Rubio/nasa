@@ -26,24 +26,29 @@ function LandingsForm(props) {
 
   useEffect(() => {
     const getLandingToEdit = async () => {
-      const request = await axios({
-        url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/id/${paramsId}`,
-        method: 'get'
-      });
-      const response = await request.data[0];
-      const { name, nametype, recclass, mass, fall, year, reclat, reclong } = response;
-      setName(name);
-      setNametype(nametype);
-      setRecclass(recclass);
-      setMass(mass);
-      setFall(fall);
-      setYear(year);
-      setReclat(reclat);
-      setReclong(reclong);
-      setLatitude(response.geolocation.latitude);
-      setLongitude(response.geolocation.longitude);
+      try {
+        const request = await axios({
+          url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/id/${paramsId}`,
+          method: 'get'
+        });
+        const response = await request.data[0];
+        const { name, nametype, recclass, mass, fall, year, reclat, reclong } = response;
+        setName(name);
+        setNametype(nametype);
+        setRecclass(recclass);
+        setMass(mass);
+        setFall(fall);
+        setYear(year);
+        setReclat(reclat);
+        setReclong(reclong);
+        setLatitude(response.geolocation.latitude);
+        setLongitude(response.geolocation.longitude);
+      } catch (error) {
+        throw error
+      }
     }
     getLandingToEdit();
+
 
     // eslint-disable-next-line
   }, [])
@@ -95,7 +100,7 @@ function LandingsForm(props) {
       } catch (error) {
         alert("there was an error, your new landing could not be saved");
         throw error
-        
+
       }
 
     }

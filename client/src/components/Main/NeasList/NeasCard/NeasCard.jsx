@@ -4,16 +4,22 @@ import axios from "axios";
 
 
 const NeasCard = (props) => {
-const {designation, discovery_date,h_mag, i_deg, moid_au, orbit_class, period_yr, pha, q_au_1, q_au_2 }= props.data
+  const { designation, discovery_date, h_mag, i_deg, moid_au, orbit_class, period_yr, pha, q_au_1, q_au_2 } = props.data
 
-const removeNea = () => {
-    axios({
-      method:'delete',
-      url:`${process.env.BASE_URL}/api/astronomy/neas/delete`,
-      data:{designation:designation},
-    })
-    props.remove();
-}
+  const removeNea = () => {
+    try {
+
+
+      axios({
+        method: 'delete',
+        url: `${process.env.BASE_URL}/api/astronomy/neas/delete`,
+        data: { designation: designation },
+      })
+      props.remove();
+    } catch (error) {
+      throw error
+    }
+  }
 
   return <div className="neas-card">
     <p>Designation: {designation}</p>
@@ -29,7 +35,7 @@ const removeNea = () => {
     <button className="button1" onClick={removeNea}>Borrar</button>
     <button className="button1">Añadir a carrito</button>
   </div>;
-  
+
 };
 
 export default NeasCard;

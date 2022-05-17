@@ -90,18 +90,24 @@ function LandingsList(props) {
     const handleSearchLandingByName = async (event) => {
         event.preventDefault();
         const params = landingNameForSearch.current.value;
-        //Capitalize params to prevent request errors
-        const request = await axios({
-            url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/name/${params}`,
-            method: 'get'
-        })
-        const response = await request.data[0];
-        if (response !== undefined) {
-            setSoughtLanding(response)
-            setTimeout(() => { setSoughtLanding({}) }, 5000)
-        } else {
-            setSoughtLanding("n/a")
-            setTimeout(() => { setSoughtLanding({}) }, 3000)
+        try {
+
+
+            //Capitalize params to prevent request errors
+            const request = await axios({
+                url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/name/${params}`,
+                method: 'get'
+            })
+            const response = await request.data[0];
+            if (response !== undefined) {
+                setSoughtLanding(response)
+                setTimeout(() => { setSoughtLanding({}) }, 5000)
+            } else {
+                setSoughtLanding("n/a")
+                setTimeout(() => { setSoughtLanding({}) }, 3000)
+            }
+        } catch (error) {
+            throw error;
         }
     }
 

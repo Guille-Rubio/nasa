@@ -8,15 +8,20 @@ const LandingsCard = (props) => {
   const [showDetail, setShowDetail] = useState(false)
 
   const { id, name, year, geolocation, mass, date, fall, recclass, nametype } = props.data
- 
+
 
   const removeLanding = () => {
-    axios({
-      method: 'delete',
-      url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/delete`,
-      data: { id: id },
-    })
-    props.remove();
+    try {
+      axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/delete`,
+        data: { id: id },
+      })
+      props.remove();
+    } catch (error) {
+      throw error
+    }
+
   }
 
 
