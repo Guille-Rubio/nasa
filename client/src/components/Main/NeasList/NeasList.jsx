@@ -22,11 +22,11 @@ function NeasList(props) {
       try {
         const request = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/astronomy/neas`);
         const response = await request.data;
-        console.log(request);
+
 
         setNeas(response)
       } catch (error) {
-        console.log(error);
+        throw error
       }
     }
     fetchNeas()

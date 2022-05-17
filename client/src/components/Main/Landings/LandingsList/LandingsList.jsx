@@ -39,9 +39,9 @@ function LandingsList(props) {
             try {
                 const request = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/${filter}`);
                 const response = await request.data;
-                console.log("landings", request);
+
                 const locatedLandings = response.filter(landing => landing.geolocation !== "")
-                console.log(locatedLandings)
+
                 const landingsCoordinates = locatedLandings.map(landing => landing.geolocation ? [landing.geolocation.latitude, landing.geolocation.longitude] : [0, 0])
                 setCoordinates(landingsCoordinates)
                 setLandings(response)
@@ -82,7 +82,7 @@ function LandingsList(props) {
 
     const handleDate = (event) => {
         event.preventDefault();
-        console.log(from.current.value)
+
         setFilter(`?from=${from.current.value}&to=${to.current.value}`)
     }
 
@@ -118,7 +118,7 @@ function LandingsList(props) {
                 }
             })
         } catch (error) {
-            console.log(error)
+            throw error
         }
         const remainingLandings = landings.filter((landing, j) => i !== j)
         setLandings(remainingLandings);
@@ -215,9 +215,9 @@ function LandingsList(props) {
                         </div>
                     </> : ""}
 
-                    
 
-                    
+
+
             </form>
             <div>
                 {landings ? <p>{landings.length} landings displayed </p> : ""}
@@ -225,7 +225,7 @@ function LandingsList(props) {
 
 
         </section>
-        {coordinates.length!==0 ? <>
+        {coordinates.length !== 0 ? <>
             <section>
                 <div className="map" id="map">
 

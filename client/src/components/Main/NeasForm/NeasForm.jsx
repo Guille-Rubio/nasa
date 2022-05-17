@@ -59,10 +59,11 @@ function NeasForm(props) {
       setI_deg("");
       setPha("");
       setOrbit_class("");
-      alert(`Se ha añadido ${designation} a la base de datos`)
+      alert(`${designation} saved`)
 
     } catch (err) {
-      console.log(err)
+      alert('Save failed')
+      throw err
     }
   }
 

@@ -93,7 +93,9 @@ function LandingsForm(props) {
         setTimeout(() => setMessage(""), 3000);
 
       } catch (error) {
-        console.log("there was an error, your new landing could not be saved")
+        alert("there was an error, your new landing could not be saved");
+        throw error
+        
       }
 
     }
