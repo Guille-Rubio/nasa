@@ -14,7 +14,7 @@ const LandingsCard = (props) => {
     try {
       axios({
         method: 'delete',
-        url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/delete`,
+        url: `/api/astronomy/landings/delete`,
         data: { id: id },
       })
       props.remove();

@@ -34,7 +34,7 @@ function NeasForm(props) {
     try {
       await axios({
         method: 'post',
-        url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/neas/create`,
+        url: `/api/astronomy/neas/create`,
         data: {
           designation: designation,
           discovery_date: discovery_date,

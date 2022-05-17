@@ -28,7 +28,7 @@ function LandingsForm(props) {
     const getLandingToEdit = async () => {
       try {
         const request = await axios({
-          url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/id/${paramsId}`,
+          url: `/api/astronomy/landings/id/${paramsId}`,
           method: 'get'
         });
         const response = await request.data[0];
@@ -76,7 +76,7 @@ function LandingsForm(props) {
       try {
         const request = await axios({
           method: 'post',
-          url: `${process.env.REACT_APP_BASE_URL}/api/astronomy/landings/create`,
+          url: `/api/astronomy/landings/create`,
           data: {
             name: name,
             id: id,

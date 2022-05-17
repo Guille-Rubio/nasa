@@ -21,7 +21,7 @@ const User = () => {
 
       try {
         const request = await axios({
-          url: `${process.env.REACT_APP_BASE_URL}/users/signup`,
+          url: `/users/signup`,
           method: 'post',
           data: {
             email: email,
@@ -50,7 +50,7 @@ const User = () => {
     event.preventDefault();
     try {
       const request = await axios({
-        url: `${process.env.REACT_APP_BASE_URL}/users/login`,
+        url: `/users/login`,
         method: 'post',
         /*  withCredentials:true, */
         data: {

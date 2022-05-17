@@ -20,7 +20,7 @@ function NeasList(props) {
 
     const fetchNeas = async () => {
       try {
-        const request = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/astronomy/neas`);
+        const request = await axios.get(`/api/astronomy/neas`);
         const response = await request.data;
         setNeas(response)
       } catch (error) {
