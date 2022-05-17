@@ -46,7 +46,7 @@ function LandingsList(props) {
                 setCoordinates(landingsCoordinates)
                 setLandings(response)
             } catch (error) {
-                console.log(error);
+                throw error
             }
         }
         fetchLandings()

@@ -13,7 +13,7 @@ function Home(props) {
         const picture = await request.data.hdurl||request.data.url;
         setApod(picture)
       } catch (err) {
-        console.log(err)
+        throw err
       }
     }
     getApod()
